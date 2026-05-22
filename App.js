@@ -1,27 +1,21 @@
-import { fetchPosts } from "./API.js";
 
-import saveToLocal from "./torage.js";
+import { fetchPosts } from "./api.js";
 
-function initApp() {
+import saveToLocal from "./storage.js";
 
-  fetchPosts()
+async function initApp() {
+  const posts = await fetchPosts();
 
-    .then((posts) => {
+  const topFivePosts = posts.slice(0, 5);
 
-      const top5Posts = posts.slice(0, 5);
+  topFivePosts.forEach((post, index) => {
+    console.log(`Post #${index + 1}`);
+    console.log(`Title: ${post.title}`);
+    console.log(`Body: ${post.body}`);
+    console.log("---------------------------");
+  });
 
-      top5Posts.forEach((post, index) => {
-        console.log(`Post Number : ${index + 1}`);
-        console.log(`Title       : ${post.title}`);
-        console.log(`Body        : ${post.body}`);
-        
-      });
-
-      saveToLocal(top5Posts);
-
-    });
-
+  await saveToLocal(topFivePosts);
 }
 
-// Execute the app
-initApp();        
+initApp();

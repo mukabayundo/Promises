@@ -1,22 +1,19 @@
+function fetchPosts() {
+  return fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch posts");
+      }
 
-export function fetchPosts(){
-fetch("https://jsonplaceholder.typicode.com/posts")
-.then((Response)=> {
-    return Response.json();
-})
-    
-
-    .then((data)=> {
-        console.log(data);
-        return data;
-      
+      return response.json();
     })
-
-   .catch((error) => {
-        console.log(error);
-        return error;
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error fetching posts:", error);
+      return [];
     });
-
 }
-fetchPosts();
 
+export { fetchPosts };
